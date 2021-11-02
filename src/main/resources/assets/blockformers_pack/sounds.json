@@ -1,0 +1,69 @@
+
+{
+  "g1_transform_to_vehicle":
+  {
+    "category": "player", "subtitle": "g1_transform_to_vehicle",
+    "sounds":
+    [
+      {
+        "name": "blockformers_pack:g1_transform_to_vehicle",
+        "stream": true
+      }
+    ]
+  },
+  "g1_transform_to_robot":
+  {
+    "category": "player", "subtitle": "g1_transform_to_robot",
+    "sounds":
+    [
+      {
+        "name": "blockformers_pack:g1_transform_to_robot",
+        "stream": true
+      }
+    ]
+  },
+  "g1_step_1":
+  {
+    "category": "player", "subtitle": "g1_step_1",
+    "sounds":
+    [
+      {
+        "name": "blockformers_pack:g1_step_1",
+        "stream": true
+      }
+    ]
+  },
+  "g1_step_2":
+  {
+    "category": "player", "subtitle": "g1_step_2",
+    "sounds":
+    [
+      {
+        "name": "blockformers_pack:g1_step_2",
+        "stream": true
+      }
+    ]
+  },
+  "step_small_3":
+  {
+    "category": "player", "subtitle": "step_small_3",
+    "sounds":
+    [
+      {
+        "name": "blockformers_pack:step_small_3",
+        "stream": true
+      }
+    ]
+  },
+  "step_small_4":
+  {
+    "category": "player", "subtitle": "step_small_4",
+    "sounds":
+    [
+      {
+        "name": "blockformers_pack:step_small_4",
+        "stream": true
+      }
+    ]
+  }
+}
