@@ -1,5 +1,10 @@
 package com.marctron.blockformers_pack.blockformers_pack.transformers;
 
+import com.marctron.blockformers_pack.blockformers_pack.Blockformers_Pack;
+import com.marctron.blockformers_pack.blockformers_pack.Sounds;
+import com.marctron.blockformers_pack.blockformers_pack.client.models.G1OptimusPrimeModel;
+import com.marctron.blockformers_pack.blockformers_pack.client.models.G1ThundercrackerModel;
+import com.marctron.blockformers_pack.blockformers_pack.client.models.WFC_BreakdownModel;
 import com.marctron.transformersunlimited.capabilities.ITransformer;
 import com.marctron.transformersunlimited.capabilities.TransformerProvider;
 import com.marctron.transformersunlimited.objects.client.RenderTypes;
@@ -9,9 +14,6 @@ import com.marctron.transformersunlimited.objects.transformers.AltModes;
 import com.marctron.transformersunlimited.objects.transformers.Factions;
 import com.marctron.transformersunlimited.objects.transformers.Transformer;
 import com.marctron.transformersunlimited.util.FirstPersonModelUtil;
-import com.marctron.blockformers_pack.blockformers_pack.Blockformers_Pack;
-import com.marctron.blockformers_pack.blockformers_pack.Sounds;
-import com.marctron.blockformers_pack.blockformers_pack.client.models.G1OptimusPrimeModel;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
@@ -43,24 +45,24 @@ import software.bernie.geckolib3.util.RenderUtils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class G1OptimusPrime extends Transformer {
+public class G1Thundercracker extends Transformer {
 
 
-    public G1OptimusPrime() {
+    public G1Thundercracker() {
         super(new Properties()
-                .setName("G1 Optimus Prime")
-                .setCharacterIcon(new ResourceLocation(Blockformers_Pack.MOD_ID, "textures/icons/g1_optimus_prime.png"))
-                .setModel(new G1OptimusPrimeModel())
-                .setFaction(Factions.AUTOBOT)
+                .setName("G1 Thundercracker")
+                .setCharacterIcon(new ResourceLocation(Blockformers_Pack.MOD_ID, "textures/icons/g1_thundercracker.png"))
+                .setModel(new G1ThundercrackerModel())
+                .setFaction(Factions.DECEPTICON)
                 .setJumpHeight(4)
                 .setSize(new EntitySize(2.5F, 7.5F, false))
                 .setEyeHeight(7F)
                 .setRangeMultiplier(2)
-                .setAltMode(AltModes.LAND_VEHICLE)
-                .setAltModeSize(new EntitySize(2.75F, 3F, false))
+                .setAltMode(AltModes.AIR_VEHICLE)
+                .setAltModeSize(new EntitySize(3F, 1F, false))
                 .setAltModeEyeHeight(2.0F)
-                .setAltModeTransformAnimation("transformation")
-                .setAltModeMotionTransformAnimation("transformation")
+                .setAltModeTransformAnimation("transformation v1")
+                .setAltModeMotionTransformAnimation("transformation v1")
                 .setAltModeSpeedMultiplier(1.3F)
                 .setAttackMultiplier(20)
                 .setNormalModeSpeedMultiplier(1.2F)
@@ -91,7 +93,7 @@ public class G1OptimusPrime extends Transformer {
 
     @Override
     public int getMaxTransformAnimationTicks() {
-        return 65;
+        return 60;
     }
 
     private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {
@@ -153,37 +155,39 @@ public class G1OptimusPrime extends Transformer {
         });
         return PlayState.CONTINUE;
     }
+
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayerEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, TransformerGeoLayer layer, ITransformer transformer) {
         //super.render(matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, layer, transformer);
         matrixStackIn.push();
         matrixStackIn.rotate(new Quaternion(0, 0, 180, true));
 
-        matrixStackIn.translate(0, -1.5, 0);
-        matrixStackIn.scale(1F,1F,1F);
         layer.setModelProvider(getAnimatedModel());
-
         AnimatedGeoModel<IAnimatable> animatedGeoModel = layer.getGeoModelProvider();
         GeoModel geoModel = animatedGeoModel.getModel(animatedGeoModel.getModelLocation(transformer));
+        setupModel(geoModel, entitylivingbaseIn, (PlayerModel)layer.getEntityModel());
+
+        matrixStackIn.translate(0, -1.5, 0);
+        matrixStackIn.scale(1F,1F,1F);
 
 
 
         if (!Minecraft.getInstance().isGamePaused()) {
             layer.getGeoModelProvider().setLivingAnimations((com.marctron.transformersunlimited.capabilities.Transformer) transformer, layer.getUniqueID(transformer), null);
         }
-        GeoBone neck = (GeoBone)geoModel.getBone("neck").orElse(new GeoBone());
+        GeoBone neck = (GeoBone)geoModel.getBone("Neck").orElse(new GeoBone());
         GeoBone head = (GeoBone)geoModel.getBone("Head").orElse(new GeoBone());
-        GeoBone Right_Arm = ((GeoBone)geoModel.getBone("Right_Arm").get());
-        GeoBone Right_Lower_Arm = ((GeoBone)geoModel.getBone("Right_Lower_Arm").get());
-        GeoBone Left_Arm = ((GeoBone)geoModel.getBone("Left_Arm").get());
-        GeoBone Left_Lower_Arm = ((GeoBone)geoModel.getBone("Left_Lower_Arm").get());
+        GeoBone Right_Arm = (GeoBone)geoModel.getBone("Right_Arm").orElse(new GeoBone());
+        GeoBone Right_Lower_Arm = (GeoBone)geoModel.getBone("Right_Lower_Arm").orElse(new GeoBone());
+        GeoBone Left_Arm = (GeoBone)geoModel.getBone("Left_Arm").orElse(new GeoBone());
+        GeoBone Left_Lower_Arm = (GeoBone)geoModel.getBone("Left_Lower_Arm").orElse(new GeoBone());
 
-        GeoBone Right_Leg = ((GeoBone)geoModel.getBone("Right_Leg").get());
-        GeoBone Right_Lower_Leg = ((GeoBone)geoModel.getBone("Right_Lower_Leg").get());
-        GeoBone Right_Foot = ((GeoBone)geoModel.getBone("Right_Foot").get());
-        GeoBone Left_Foot = ((GeoBone)geoModel.getBone("Left_Foot").get());
-        GeoBone Left_Leg = ((GeoBone)geoModel.getBone("Left_Leg").get());
-        GeoBone Left_Lower_Leg = ((GeoBone)geoModel.getBone("Left_Lower_Leg").get());
+        GeoBone Right_Leg = (GeoBone)geoModel.getBone("Right_Leg").orElse(new GeoBone());
+        GeoBone Right_Lower_Leg = (GeoBone)geoModel.getBone("Right_Lower_Leg").orElse(new GeoBone());
+        GeoBone Right_Foot = (GeoBone)geoModel.getBone("Right_Foot").orElse(new GeoBone());
+        GeoBone Left_Foot = (GeoBone)geoModel.getBone("Left_Foot").orElse(new GeoBone());
+        GeoBone Left_Leg = (GeoBone)geoModel.getBone("Left_Leg").orElse(new GeoBone());
+        GeoBone Left_Lower_Leg = (GeoBone)geoModel.getBone("Left_Lower_Leg").orElse(new GeoBone());
 
         GeoBone Body = (GeoBone)geoModel.getBone("Waist").get();
 
@@ -252,12 +256,7 @@ public class G1OptimusPrime extends Transformer {
             //Right_Lower_Arm.rotateAngleY = -0.2F *downwardPose;
             //Left_Lower_Arm.rotateAngleY = 0.2F *downwardPose;
         }
-        GeoBone RightFrontWheel = ((GeoBone)geoModel.getBone("Wheel8").get());
-        GeoBone LeftFrontWheel = ((GeoBone)geoModel.getBone("Wheel7").get());
-        GeoBone RightBackWheel1 = ((GeoBone)geoModel.getBone("Wheel11").get());
-        GeoBone RightBackWheel2 = ((GeoBone)geoModel.getBone("Wheel12").get());
-        GeoBone LeftBackWheel1 = ((GeoBone)geoModel.getBone("Wheel9").get());
-        GeoBone LeftBackWheel2 = ((GeoBone)geoModel.getBone("Wheel10").get());
+
 
         double mx= entitylivingbaseIn.getPosX() - entitylivingbaseIn.prevPosX;
         double my= entitylivingbaseIn.getPosY() - entitylivingbaseIn.prevPosY;
@@ -266,14 +265,7 @@ public class G1OptimusPrime extends Transformer {
         //System.out.println(speed);
         float wheelSpinSpeed = (speed < 10 ? -entitylivingbaseIn.limbSwing : entitylivingbaseIn.limbSwingAmount) * 0.7F;
 
-        for (GeoBone wheels : new GeoBone[] {RightFrontWheel, LeftFrontWheel, RightBackWheel1, RightBackWheel2, LeftBackWheel1, LeftBackWheel2})
-        {
-            wheels.setRotationX((float) (wheelSpinSpeed * 0.5F));
-        }
-        for (GeoBone steeringwheels : new GeoBone[] {RightFrontWheel, LeftFrontWheel})
-        {
-            steeringwheels.setRotationY(0);
-        }
+
 
         if ((entitylivingbaseIn.getPrimaryHand() == HandSide.LEFT ? entitylivingbaseIn.getHeldItemMainhand() : entitylivingbaseIn.getHeldItemOffhand()).getItem() instanceof GunItemBase) {
 
@@ -325,7 +317,7 @@ public class G1OptimusPrime extends Transformer {
                 bufferIn = layer.getActualBuffer().getBuffer(layer.getActualRenderType());
             }
 
-           if (bone.getName().equals("camera")) {
+           if (bone.getName().equals("Head")) {
                 stack.push();
                 RenderUtils.translate(bone, stack);
                 RenderUtils.moveToPivot(bone, stack);

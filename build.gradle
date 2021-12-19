@@ -20,7 +20,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.0.1.7'
+version = '0.0.1.21'
 group = 'com.marctron.blockformers_pack' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Blockformers_PACK'
 
@@ -131,7 +131,7 @@ dependencies {
     compile fg.deobf('curse.maven:firstpersonmodel-333287:3239400')
     compile fg.deobf('curse.maven:transliterationlib-441024:3251051')
 
-    compile 'com.marctron.transformersunlimited:TFU:0.0.1.49:deobf'
+    compile 'com.marctron.transformersunlimited:TFU:0.0.1.50:deobf'
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

@@ -40,13 +40,21 @@ public class Blockformers_Pack {
         @SubscribeEvent
         public static void onTransformersRegistry(final RegistryEvent.Register<Transformer> transformerRegisterEvent) {
             //Breakdown
-            Transformer wfcBreakdown = new WFC_Breakdown();
-            wfcBreakdown.setRegistryName(new ResourceLocation(MOD_ID,"wfc_breakdown"));
-            transformerRegisterEvent.getRegistry().register(wfcBreakdown);
+            //Transformer wfcBreakdown = new WFC_Breakdown();
+            //wfcBreakdown.setRegistryName(new ResourceLocation(MOD_ID,"wfc_breakdown"));
+            //transformerRegisterEvent.getRegistry().register(wfcBreakdown);
 
             Transformer G1OptimusPrime = new G1OptimusPrime();
             G1OptimusPrime.setRegistryName(new ResourceLocation(MOD_ID,"g1_optimus_prime"));
             transformerRegisterEvent.getRegistry().register(G1OptimusPrime);
+
+            Transformer G1Thundercracker = new G1Thundercracker();
+            G1Thundercracker.setRegistryName(new ResourceLocation(MOD_ID,"g1_thundercracker"));
+            transformerRegisterEvent.getRegistry().register(G1Thundercracker);
+
+            Transformer G1Hook = new G1Hook();
+            G1Hook.setRegistryName(new ResourceLocation(MOD_ID,"g1_hook"));
+            transformerRegisterEvent.getRegistry().register(G1Hook);
         }
 
         @SubscribeEvent

@@ -1,5 +1,9 @@
 package com.marctron.blockformers_pack.blockformers_pack.transformers;
 
+import com.marctron.blockformers_pack.blockformers_pack.Blockformers_Pack;
+import com.marctron.blockformers_pack.blockformers_pack.Sounds;
+import com.marctron.blockformers_pack.blockformers_pack.client.models.G1HookModel;
+import com.marctron.blockformers_pack.blockformers_pack.client.models.G1OptimusPrimeModel;
 import com.marctron.transformersunlimited.capabilities.ITransformer;
 import com.marctron.transformersunlimited.capabilities.TransformerProvider;
 import com.marctron.transformersunlimited.objects.client.RenderTypes;
@@ -9,9 +13,6 @@ import com.marctron.transformersunlimited.objects.transformers.AltModes;
 import com.marctron.transformersunlimited.objects.transformers.Factions;
 import com.marctron.transformersunlimited.objects.transformers.Transformer;
 import com.marctron.transformersunlimited.util.FirstPersonModelUtil;
-import com.marctron.blockformers_pack.blockformers_pack.Blockformers_Pack;
-import com.marctron.blockformers_pack.blockformers_pack.Sounds;
-import com.marctron.blockformers_pack.blockformers_pack.client.models.G1OptimusPrimeModel;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
@@ -43,14 +44,14 @@ import software.bernie.geckolib3.util.RenderUtils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class G1OptimusPrime extends Transformer {
+public class G1Hook extends Transformer {
 
 
-    public G1OptimusPrime() {
+    public G1Hook() {
         super(new Properties()
-                .setName("G1 Optimus Prime")
-                .setCharacterIcon(new ResourceLocation(Blockformers_Pack.MOD_ID, "textures/icons/g1_optimus_prime.png"))
-                .setModel(new G1OptimusPrimeModel())
+                .setName("G1 Hook")
+                .setCharacterIcon(new ResourceLocation(Blockformers_Pack.MOD_ID, "textures/icons/g1_hook.png"))
+                .setModel(new G1HookModel())
                 .setFaction(Factions.AUTOBOT)
                 .setJumpHeight(4)
                 .setSize(new EntitySize(2.5F, 7.5F, false))
@@ -59,13 +60,13 @@ public class G1OptimusPrime extends Transformer {
                 .setAltMode(AltModes.LAND_VEHICLE)
                 .setAltModeSize(new EntitySize(2.75F, 3F, false))
                 .setAltModeEyeHeight(2.0F)
-                .setAltModeTransformAnimation("transformation")
-                .setAltModeMotionTransformAnimation("transformation")
+                .setAltModeTransformAnimation("transform")
+                .setAltModeMotionTransformAnimation("transform")
                 .setAltModeSpeedMultiplier(1.3F)
                 .setAttackMultiplier(20)
                 .setNormalModeSpeedMultiplier(1.2F)
-                .setNormalModeTransformAnimation("transformation_back")
-                .setNormalModeMotionTransformAnimation("transformation_back")
+                .setNormalModeTransformAnimation("transform_back")
+                .setNormalModeMotionTransformAnimation("transform_back")
                 .setHasGlowingTexture(true)
                 , Blockformers_Pack.PACK);
     }
@@ -153,6 +154,65 @@ public class G1OptimusPrime extends Transformer {
         });
         return PlayState.CONTINUE;
     }
+
+    public static void setupModel(GeoModel model, AbstractClientPlayerEntity playerEntity, PlayerModel<AbstractClientPlayerEntity> playerModel) {
+        GeoBone head = model.getBone("Head").orElse(new GeoBone());
+        GeoBone leftShoulder = model.getBone("Left_Arm").orElse(new GeoBone());
+        GeoBone leftLowerArm = model.getBone("Left_Lower_Arm").orElse(new GeoBone());
+        GeoBone rightShoulder = model.getBone("Right_Arm").orElse(new GeoBone());
+        GeoBone rightLowerArm = model.getBone("Right_Lower_Arm").orElse(new GeoBone());
+
+        head.setRotationX(-playerModel.bipedHead.rotateAngleX);
+        head.setRotationY(-playerModel.bipedHead.rotateAngleY);
+        head.setRotationZ(-playerModel.bipedHead.rotateAngleZ);
+
+        if ((playerEntity.getPrimaryHand() == HandSide.RIGHT ? playerEntity.getHeldItemMainhand() : playerEntity.getHeldItemOffhand()).getItem() instanceof GunItemBase){
+
+            if(Minecraft.getInstance().gameSettings.keyBindAttack.isKeyDown()){
+                leftShoulder.setRotationX(-playerModel.bipedHead.rotateAngleX + (float) (Math.PI * 0.3));
+                leftShoulder.setRotationY(head.getRotationY() +(float)(Math.PI*0.1));
+                leftShoulder.setRotationZ(0);
+
+                leftLowerArm.setRotationX((float)(Math.PI*0.1));
+                leftLowerArm.setRotationY(0);
+                leftLowerArm.setRotationZ(0);
+            }
+            else {
+                leftShoulder.setRotationX(-playerModel.bipedHead.rotateAngleX + (float) (Math.PI * 0.1));
+                leftShoulder.setRotationY(head.getRotationY());
+                leftShoulder.setRotationZ(0);
+
+                leftLowerArm.setRotationX((float) (Math.PI * 0.4));
+                leftLowerArm.setRotationY(0);
+                leftLowerArm.setRotationZ(0);
+            }
+        }
+        if ((playerEntity.getPrimaryHand() == HandSide.LEFT ? playerEntity.getHeldItemMainhand() : playerEntity.getHeldItemOffhand()).getItem() instanceof GunItemBase){
+
+            if(Minecraft.getInstance().gameSettings.keyBindAttack.isKeyDown()){
+                rightShoulder.setRotationX(-playerModel.bipedHead.rotateAngleX + (float) (Math.PI * 0.3));
+                rightShoulder.setRotationY(head.getRotationY() - (float) (Math.PI * 0.1));
+                rightShoulder.setRotationZ(0);
+
+                rightLowerArm.setRotationX((float)(Math.PI*0.1));
+                rightLowerArm.setRotationY(0);
+                rightLowerArm.setRotationZ(0);
+            }
+            else {
+                rightShoulder.setRotationX(-playerModel.bipedHead.rotateAngleX + (float) (Math.PI * 0.1));
+                rightShoulder.setRotationY(head.getRotationY());
+                rightShoulder.setRotationZ(0);
+
+                rightLowerArm.setRotationX((float) (Math.PI * 0.4));
+                rightLowerArm.setRotationY(0);
+                rightLowerArm.setRotationZ(0);
+            }
+        }
+        if (ModList.get().isLoaded("firstpersonmod")) {
+            //head.setHidden(!FirstPersonModelUtil.shouldRenderHead());
+        }
+    }
+
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayerEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, TransformerGeoLayer layer, ITransformer transformer) {
         //super.render(matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, layer, transformer);
@@ -171,7 +231,7 @@ public class G1OptimusPrime extends Transformer {
         if (!Minecraft.getInstance().isGamePaused()) {
             layer.getGeoModelProvider().setLivingAnimations((com.marctron.transformersunlimited.capabilities.Transformer) transformer, layer.getUniqueID(transformer), null);
         }
-        GeoBone neck = (GeoBone)geoModel.getBone("neck").orElse(new GeoBone());
+        GeoBone neck = (GeoBone)geoModel.getBone("Neck").orElse(new GeoBone());
         GeoBone head = (GeoBone)geoModel.getBone("Head").orElse(new GeoBone());
         GeoBone Right_Arm = ((GeoBone)geoModel.getBone("Right_Arm").get());
         GeoBone Right_Lower_Arm = ((GeoBone)geoModel.getBone("Right_Lower_Arm").get());
@@ -188,7 +248,7 @@ public class G1OptimusPrime extends Transformer {
         GeoBone Body = (GeoBone)geoModel.getBone("Waist").get();
 
         if (ModList.get().isLoaded("firstpersonmod")) {
-            //neck.setHidden(!FirstPersonModelUtil.shouldRenderHead());
+           //neck.setHidden(!FirstPersonModelUtil.shouldRenderHead());
         }
 
         if(entitylivingbaseIn.isSneaking()){
@@ -252,12 +312,6 @@ public class G1OptimusPrime extends Transformer {
             //Right_Lower_Arm.rotateAngleY = -0.2F *downwardPose;
             //Left_Lower_Arm.rotateAngleY = 0.2F *downwardPose;
         }
-        GeoBone RightFrontWheel = ((GeoBone)geoModel.getBone("Wheel8").get());
-        GeoBone LeftFrontWheel = ((GeoBone)geoModel.getBone("Wheel7").get());
-        GeoBone RightBackWheel1 = ((GeoBone)geoModel.getBone("Wheel11").get());
-        GeoBone RightBackWheel2 = ((GeoBone)geoModel.getBone("Wheel12").get());
-        GeoBone LeftBackWheel1 = ((GeoBone)geoModel.getBone("Wheel9").get());
-        GeoBone LeftBackWheel2 = ((GeoBone)geoModel.getBone("Wheel10").get());
 
         double mx= entitylivingbaseIn.getPosX() - entitylivingbaseIn.prevPosX;
         double my= entitylivingbaseIn.getPosY() - entitylivingbaseIn.prevPosY;
@@ -266,13 +320,13 @@ public class G1OptimusPrime extends Transformer {
         //System.out.println(speed);
         float wheelSpinSpeed = (speed < 10 ? -entitylivingbaseIn.limbSwing : entitylivingbaseIn.limbSwingAmount) * 0.7F;
 
-        for (GeoBone wheels : new GeoBone[] {RightFrontWheel, LeftFrontWheel, RightBackWheel1, RightBackWheel2, LeftBackWheel1, LeftBackWheel2})
+        //for (GeoBone wheels : new GeoBone[] {RightFrontWheel, LeftFrontWheel, RightBackWheel1, RightBackWheel2, LeftBackWheel1, LeftBackWheel2})
         {
-            wheels.setRotationX((float) (wheelSpinSpeed * 0.5F));
+          //  wheels.setRotationX((float) (wheelSpinSpeed * 0.5F));
         }
-        for (GeoBone steeringwheels : new GeoBone[] {RightFrontWheel, LeftFrontWheel})
+        //for (GeoBone steeringwheels : new GeoBone[] {RightFrontWheel, LeftFrontWheel})
         {
-            steeringwheels.setRotationY(0);
+           // steeringwheels.setRotationY(0);
         }
 
         if ((entitylivingbaseIn.getPrimaryHand() == HandSide.LEFT ? entitylivingbaseIn.getHeldItemMainhand() : entitylivingbaseIn.getHeldItemOffhand()).getItem() instanceof GunItemBase) {

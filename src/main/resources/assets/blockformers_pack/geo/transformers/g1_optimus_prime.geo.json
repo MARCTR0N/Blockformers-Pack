@@ -115,9 +115,11 @@
 							"size": [8, 16, 45],
 							"uv": {
 								"north": {"uv": [58, 419], "uv_size": [8, 16]},
+								"east": {"uv": [0, 0], "uv_size": [0, 0]},
 								"south": {"uv": [101, 435], "uv_size": [8, 16]},
 								"west": {"uv": [32, 440], "uv_size": [45, 16]},
-								"up": {"uv": [66, 435], "uv_size": [-8, -45]}
+								"up": {"uv": [66, 435], "uv_size": [-8, -45]},
+								"down": {"uv": [0, 0], "uv_size": [0, 0]}
 							}
 						}
 					]
@@ -1023,7 +1025,9 @@
 								"north": {"uv": [66, 419], "uv_size": [-8, 16]},
 								"east": {"uv": [77, 440], "uv_size": [-45, 16]},
 								"south": {"uv": [109, 435], "uv_size": [-8, 16]},
-								"up": {"uv": [58, 435], "uv_size": [8, -45]}
+								"west": {"uv": [0, 0], "uv_size": [0, 0]},
+								"up": {"uv": [58, 435], "uv_size": [8, -45]},
+								"down": {"uv": [0, 0], "uv_size": [0, 0]}
 							}
 						}
 					]
@@ -2172,7 +2176,7 @@
 					]
 				},
 				{
-					"name": "neck",
+					"name": "Neck",
 					"parent": "Chest",
 					"pivot": [0, 107, 2],
 					"cubes": [
@@ -2192,7 +2196,7 @@
 				},
 				{
 					"name": "Head",
-					"parent": "neck",
+					"parent": "Neck",
 					"pivot": [0, 109, 0],
 					"cubes": [
 						{
@@ -2586,7 +2590,7 @@
 				{
 					"name": "Right_Lower_Arm",
 					"parent": "Right_Arm",
-					"pivot": [-20.32571, 79.84317, -4.63747],
+					"pivot": [-30.32571, 79.84317, -4.63747],
 					"rotation": [-15, 0, 0],
 					"cubes": [
 						{
@@ -2826,7 +2830,6 @@
 				},
 				{
 					"name": "camera",
-					"parent": "OptimusPrime",
 					"pivot": [0, 118, -5],
 					"cubes": [
 						{
