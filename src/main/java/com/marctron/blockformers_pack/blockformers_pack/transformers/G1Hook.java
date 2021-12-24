@@ -52,7 +52,7 @@ public class G1Hook extends Transformer {
                 .setName("G1 Hook")
                 .setCharacterIcon(new ResourceLocation(Blockformers_Pack.MOD_ID, "textures/icons/g1_hook.png"))
                 .setModel(new G1HookModel())
-                .setFaction(Factions.AUTOBOT)
+                .setFaction(Factions.DECEPTICON)
                 .setJumpHeight(4)
                 .setSize(new EntitySize(2.5F, 7.5F, false))
                 .setEyeHeight(7F)
@@ -320,9 +320,16 @@ public class G1Hook extends Transformer {
         //System.out.println(speed);
         float wheelSpinSpeed = (speed < 10 ? -entitylivingbaseIn.limbSwing : entitylivingbaseIn.limbSwingAmount) * 0.7F;
 
-        //for (GeoBone wheels : new GeoBone[] {RightFrontWheel, LeftFrontWheel, RightBackWheel1, RightBackWheel2, LeftBackWheel1, LeftBackWheel2})
+        GeoBone Right_Front_Wheel = (GeoBone)geoModel.getBone("Right_Front_Wheel").orElse(new GeoBone());
+        GeoBone Right_Back_Wheel_1 = (GeoBone)geoModel.getBone("Right_Back_Wheel_1").orElse(new GeoBone());
+        GeoBone Right_Back_Wheel_2 = (GeoBone)geoModel.getBone("Right_Back_Wheel_2").orElse(new GeoBone());
+        GeoBone Left_Front_Wheel = (GeoBone)geoModel.getBone("Left_Front_Wheel").orElse(new GeoBone());
+        GeoBone Left_Back_Wheel_1 = (GeoBone)geoModel.getBone("Left_Back_Wheel_1").orElse(new GeoBone());
+        GeoBone Left_Back_Wheel_2 = (GeoBone)geoModel.getBone("Left_Back_Wheel_2").orElse(new GeoBone());
+
+        for (GeoBone wheels : new GeoBone[] {Right_Front_Wheel, Left_Front_Wheel, Right_Back_Wheel_1, Right_Back_Wheel_2, Left_Back_Wheel_1, Left_Back_Wheel_2})
         {
-          //  wheels.setRotationX((float) (wheelSpinSpeed * 0.5F));
+            wheels.setRotationX((float) (-wheelSpinSpeed * 0.5F));
         }
         //for (GeoBone steeringwheels : new GeoBone[] {RightFrontWheel, LeftFrontWheel})
         {

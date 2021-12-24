@@ -3080,6 +3080,11 @@
 					"position": {
 						"vector": [0, 9, 9]
 					}
+				},
+				"camera": {
+					"position": {
+						"vector": [0, -75, 0]
+					}
 				}
 			}
 		},
