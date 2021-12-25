@@ -2,7 +2,7 @@ package com.marctron.blockformers_pack.blockformers_pack.client.models;
 
 import com.marctron.blockformers_pack.blockformers_pack.Blockformers_Pack;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.transformersunlimited.geckolib3.model.AnimatedGeoModel;
 
 public class WFC_ShockwaveModel extends AnimatedGeoModel {
     @Override

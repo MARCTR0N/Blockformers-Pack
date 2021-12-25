@@ -4,9 +4,9 @@ import com.marctron.blockformers_pack.blockformers_pack.Blockformers_Pack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.geckolib3.resource.GeckoLibCache;
+import software.bernie.transformersunlimited.geckolib3.core.IAnimatable;
+import software.bernie.transformersunlimited.geckolib3.model.AnimatedGeoModel;
+import software.bernie.transformersunlimited.geckolib3.resource.GeckoLibCache;
 import software.bernie.shadowed.eliotlash.molang.MolangParser;
 
 public class G1OptimusPrimeModel extends AnimatedGeoModel {

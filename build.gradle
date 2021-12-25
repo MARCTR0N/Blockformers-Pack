@@ -10,12 +10,10 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
-        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.4"
     }
 }
 apply plugin: "com.wynprice.cursemaven"
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'com.github.johnrengelman.shadow'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
@@ -122,7 +120,6 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.5'
 
-    compile fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.45')
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
@@ -131,7 +128,7 @@ dependencies {
     compile fg.deobf('curse.maven:firstpersonmodel-333287:3239400')
     compile fg.deobf('curse.maven:transliterationlib-441024:3251051')
 
-    compile 'com.marctron.transformersunlimited:TFU:0.0.1.55:deobf'
+    compile fg.deobf('com.marctron.transformersunlimited:TFU:0.0.1.55')
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
@@ -175,21 +172,6 @@ task deobfJar(type: Jar) {
 
 artifacts {
     archives deobfJar
-}
-
-shadowJar {
-    exclude 'software/bernie/example/**'
-    exclude 'assets/geckolib3/**'
-    relocate 'software.bernie.geckolib', 'software.bernie.transformersunlimited.geckolib'
-
-    classifier ''
-}
-
-reobf {
-    shadowJar {
-        dependsOn tasks.createMcpToSrg
-        mappings = tasks.createMcpToSrg.outputs.files.singleFile
-    }
 }
 
 // Example configuration to allow publishing using the maven-publish task
